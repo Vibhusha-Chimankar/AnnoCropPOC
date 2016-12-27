@@ -1,0 +1,30 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<dom-module id="demo-service">
+<template>
+<iron-ajax id="ajax" auto url="{{url}}" handle-as="json" on-response="handleData" 
+last-response="{{ajaxResponse}}"></iron-ajax>
+</template>
+<script>
+	Polymer({
+		is:"demo-service",
+		properties:{
+			url: {
+				type: String,
+				value: ''
+			},
+			dataResponse:{
+				type: Array,
+				value: function(){
+					return [];
+				},
+				notify:true
+
+			}
+		},
+		handleData: function(){
+			//alert('Hello');
+			this.dataResponse = this.$.ajax.lastResponse;
+		}
+	});
+</script>
+</dom-module>

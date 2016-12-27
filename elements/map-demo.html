@@ -1,0 +1,279 @@
+<!-- Polymer web component created to display battery chart.-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link type="text/css" rel="stylesheet" href="..\..\bower_components\annotorious-bower\css\annotorious.css" />
+<link rel="stylesheet" href="..\..\build\darkroom.css">
+<script type="text/javascript" src="..\..\bower_components\annotorious-bower\annotorious.min.js"></script>
+<dom-module is="map-demo">
+    <template>
+        <style>
+        .dailog-box.style-scope.map-demo {
+            max-width: 600px;
+            background: #fff;
+            box-shadow: 1px 2px 1px #999;
+            margin: 60px auto 0;
+            padding: 10px;
+            position: inherit;
+            z-index: 999;
+            display: none
+        }
+        
+        .dailog-box.style-scope.map-demo::before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        img#loadImage {
+            width: 100%;
+        }
+        
+        .zoomed-img.flexchild.style-scope.map-demo img {
+            width: 100%;
+        }
+        
+        img {
+            width: 100%;
+        }
+        
+        .img-data img {
+            width: 100%;
+        }
+        </style>
+        <!--<paper-dialog heading="" id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>-->
+        <div class="dailog-box" id="dialog-box">
+            <div class="img-data">
+                <div class="zoomed-img flexchild">
+                    <paper-checkbox on-change="checkboxChangedCrop" id="cropCheck">Crop Image</paper-checkbox>
+                    <paper-checkbox on-change="checkboxChanged" id="annoCheck">Enable Annotations</paper-checkbox>
+                    <img id="loadImage">
+                </div>
+                <div class="img-metadata flexchild">
+                    <h3> Altitude </h3>
+                    <span id="imgAltitude"> 42.026914</span>
+                    <hr>
+                    <h3> Longitude </h3>
+                    <span id="imgLongitude"> -93.646637 </span>
+                    <div class="defectDrop">
+                        <span>Defect Type:</span>
+                        <paper-dropdown-menu>
+                            <paper-listbox class="dropdown-content" selected="0">
+                                <paper-item>Corrosion</paper-item>
+                                <paper-item>Thinning</paper-item>
+                                <paper-item>Stress cracking</paper-item>
+                                <paper-item>Mechanical Fatigue</paper-item>
+                                <paper-item>Thermal Fatigue</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                        <span>Status:</span>
+                        <paper-dropdown-menu>
+                            <paper-listbox class="dropdown-content" selected="0">
+                                <paper-item>Fix</paper-item>
+                                <paper-item>Continue to monitor</paper-item>
+                                <paper-item>Manual Inspection</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                        <span>Enter Comments Here:</span>
+                        <paper-textarea label="" id="textarea"></paper-textarea>
+                    </div>
+                    <div class="editCropSection">
+                        <iron-icon icon="icons:flip-to-back"></iron-icon>
+                        <iron-icon icon="icons:create"></iron-icon>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <paper-button dialog-dismiss class="btn-default">Save</paper-button>
+                <paper-button dialog-dismiss class="btn-default" on-click="closeDialog">Close</paper-button>
+            </div>
+        </div>
+        <!--</paper-dialog>-->
+        <br/>
+        <paper-icon-button icon="menu" on-dblclick="toggleDialog" style="background:red"></paper-icon-button>
+    </template>
+</dom-module>
+<script src="..\..\build\fabric.js"></script>
+<script src="..\..\build\darkroom.js"></script>
+<script>
+//Init polymer component
+(function() {
+    Polymer({
+        is: 'map-demo',
+        properties: {
+            megaPath: {
+                type: String,
+                value: ''
+            }
+        },
+        toggleDialog: function(e) {
+            debugger;
+            var s1 = "elements/640px-Hallstatt.jpg";
+            var s2 = "elements/red_triangle.png";
+            var customImageurl = s1;
+            var dialog = document.querySelector('#dialog');
+            var expand = document.querySelector('#loadImage');
+            var div = document.getElementById("dialog-box");
+            div.style.display = "block";
+            expand.src = customImageurl;
+
+            this.megaPath = document.getElementById("loadImage");
+
+            this.megaPath.onload = function() {
+                debugger;
+                alert("The image has loaded!");
+                /*var annos = document.getElementById('annoCheck').checked;
+                var cropping = document.getElementById('cropCheck').checked;
+                if(annos == true) 
+                {
+                    this.checkboxChanged(e);
+                }                  
+                else if(cropping == true) {
+                     this.checkboxChangedCrop(e);
+                }*/
+
+
+
+            };
+
+
+
+
+
+
+            dialog.toggle();
+
+        },
+        closeDialog: function() {
+            var div = document.getElementById("dialog-box");
+            div.style.display = "none";
+        },
+        checkboxChangedCrop: function(e) {
+            debugger;
+            //e.stopPropagation();
+            if (e.target.checked) {
+                alert("Note: All the added annotations will be lost for this current image")
+                anno.reset();
+                var darkrm = new Darkroom(this.megaPath, {
+
+                    minWidth: 600,
+                    minHeight: 100,
+                    maxWidth: 600,
+                    maxHeight: 600,
+
+
+                    plugins: {
+                        crop: {
+                            quickCropKey: 67
+                        },
+                        save: {
+                          callback: function() {
+                            debugger;
+                            this.darkroom.selfDestroy();
+                            var newImage = this.darkroom.canvas.toDataURL();
+                                fileStorageLocation = newImage;
+                                newImage = this.megaPath;
+                                console.log(newImage);
+                            console.log('saving');*/
+                            //darkroom.canvas.clear().renderAll();
+                            
+                            
+                            return true;
+
+
+                          }
+                        }
+                        /*save: {
+                            callback: function() {
+                                debugger;
+                            darkrm.selfDestroy(); // Cleanup
+                                var newImage = this.darkroom.canvas.toDataURL();
+                                fileStorageLocation = newImage;
+                                console.log(newImage);
+                                newImage = this.megaPath;
+                                var darkroomImg = this.darkroom;
+                                //sdarkroomImg.canvas.clear().renderAll();
+
+                                return true;
+                            }
+                        }*/
+                    },
+
+                });
+            }
+        },
+        checkboxChanged: function(e, base64Blob) {
+            debugger;
+            if (e.target.checked) {
+                //this.darkroom.selfDestroy();
+                alert("You have selected to add annotation, you cannot further crop image.");
+                console.log(e.target.value);
+                anno.activateSelector();
+                anno.setProperties({
+                    stroke: 'red',
+                    stroke_width: 5,
+                    hi_stroke: '#3e87e8',
+                    hi_stroke_width: 5
+                });
+                anno.makeAnnotatable(this.megaPath);
+                //this.megaPath.onload();
+                var processCrop = document.getElementById('cropCheck');
+                processCrop.style.display = "none";
+
+            } else {
+                var processCrop = document.getElementById('cropCheck');
+                processCrop.style.display = "block";
+            }
+        },
+        initialize: function() {
+            debugger;
+            // Active crop selection
+            //this.plugins['crop'].requireFocus();
+            var cropPlugin = this.plugins['crop'];
+            cropPlugin.requireFocus();
+        }
+
+
+
+    });
+
+})();
+</script>
+<script>
+window.addEventListener('polymer-ready', function(e) {
+    debugger;
+    var dkrm = new Darkroom('#target', {
+        // Size options
+        minWidth: 100,
+        minHeight: 100,
+        maxWidth: 600,
+        maxHeight: 500,
+        ratio: 4 / 3,
+        backgroundColor: '#000',
+
+        // Plugins options
+        plugins: {
+            //save: false,
+            crop: {
+                quickCropKey: 67, //key "c"
+                //minHeight: 50,
+                //minWidth: 50,
+                //ratio: 4/3
+            }
+        },
+
+        // Post initialize script
+        initialize: function() {
+            var cropPlugin = this.plugins['crop'];
+            cropPlugin.selectZone(170, 25, 300, 300);
+            cropPlugin.requireFocus();
+        }
+
+    });
+});
+</script>
+</dom-module> }

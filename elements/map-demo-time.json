@@ -1,0 +1,34 @@
+[
+	{
+		"time": "0:00:00",
+		"area":
+			[
+				{ "title": "a", "latitude": "36.7373554", "longitude":"-104.6053002" },
+				{ "title": "b", "latitude": "41.876", "longitude":"-87.624" }
+			]
+	},
+	{
+		"time": "1:00:00",
+		"area":
+			[
+				{ "title": "c", "latitude": "37.7373554", "longitude":"-105.6053002" },
+				{ "title": "d", "latitude": "42.876", "longitude":"-88.624" }
+			]
+	},
+	{
+		"time": "2:00:00",
+		"area":
+			[
+				{ "title": "e", "latitude": "38.7373554", "longitude":"-106.6053002" },
+				{ "title": "f", "latitude": "43.876", "longitude":"-89.624" }
+			]
+	},
+	{
+		"time": "3:00:00",
+		"area":
+			[
+				{ "title": "e", "latitude": "39.7373554", "longitude":"-107.6053002" },
+				{ "title": "f", "latitude": "44.876", "longitude":"-90.624" }
+			]
+	}
+]
